@@ -1,8 +1,9 @@
 <?php
 
-/**
- * Plugin Name: Email Token Login
- */
+namespace Frozzare\Email_Token_Login;
+
+use WP_Error;
+use WP_User;
 
 class Email_Token_Login {
 
@@ -49,19 +50,11 @@ class Email_Token_Login {
   }
 
   /**
-   * Add endpoint.
-   */
-  public function add_endpoint() {
-    add_rewrite_tag( '%token%', '([^/]*)' );
-    add_rewrite_rule( 'wp-admin/login/([^/]*)/?', 'index.php?token=$matches[1]', 'top' );
-  }
-
-  /**
    * Auth user.
    *
    * @param  WP_User $user
-   * @param  string $username
-   * @param  string $password
+   * @param  string  $username
+   * @param  string  $password
    *
    * @return WP_User
    */
@@ -135,9 +128,9 @@ class Email_Token_Login {
   public function get_email_label( $translated_text ) {
     global $pagenow;
 
-    if ( $pagenow === 'wp-login.php' && $translated_text === 'Username' ) {
-      return __( 'E-mail' );
-    }
+//    if ( $pagenow === 'wp-login.php' && $translated_text === __( 'Username' ) ) {
+//      return __( 'E-mail' );
+//    }
 
     return $translated_text;
   }
@@ -163,12 +156,60 @@ class Email_Token_Login {
   }
 
   /**
+   * Generate token mail if a user is found
+   * or create a error.
+   */
+  public function generate_token() {
+    if ( isset( $_POST['log'] ) ) {
+			global $errors;
+
+			$email = $_POST['log'];
+
+      if ( $username = $this->get_user( $email ) ) {
+        $user = get_user_by( 'login', $username );
+      } else {
+        $user = get_user_by( 'email', $email );
+      }
+
+      if ( $user instanceof WP_User ) {
+        $token = wp_hash_password( $email );
+
+        // Update user meta with token and created time.
+        update_user_meta( $user->ID, $this->token_meta_key, $token );
+        update_user_meta( $user->ID, $this->created_meta_key, time() );
+
+        // Base64 is not used for encryption, it's used
+        // to get a nicer url token.
+        $token = base64_encode( $token );
+
+        // Generate login url.
+				$url = sprintf( '%s?token=%s', site_url( 'wp-login.php', 'login' ), $token );
+
+        // Send mail!
+        $mail_sent = wp_mail( $email, wp_specialchars_decode( $this->get_mail_title() ), $this->get_mail_body( $url ) );
+
+        if ( apply_filters( 'email_token_login/dev_mode', defined( 'WP_ENV' ) && WP_ENV === 'development' ) ) {
+          $errors->add( 'token', sprintf( 'Development mode: <a href="%s">Login</a>', $url ), 'message' );
+        } else {
+          if ( $mail_sent ) {
+            $errors->add( 'token', __( 'We sent you a link to sign in. Please check your inbox.', 'email-token-login' ), 'message' );
+          } else {
+            $errors->add( 'token', __( 'The email could not be sent. Possible reason: your host may have disabled the mail() function.', 'email-token-login' ) );
+          }
+        }
+      } else {
+        $errors->add( 'token_error', __( 'Something went wrong. Please try again.', 'email-token-login' ) );
+      }
+    }
+  }
+
+  /**
    * Get shared users.
    *
    * @return array
    */
   protected function get_shared_users() {
-    $users = apply_filters( 'email_token_login/shared_users', [] );
+    $users = apply_filters( 'email_token_login/shared', [] );
 
     foreach ( $users as $domain => $username ) {
       if ( ! preg_match( '/\@\w+\.\w+/', '@' . $domain ) || ! username_exists( $username ) ) {
@@ -182,26 +223,17 @@ class Email_Token_Login {
   /**
    * Handle endpoint.
    */
-  public function handle_endpoint() {
-    global $wp_query;
-
-    if ( ! is_object( $wp_query ) ) {
-      return;
-    }
-
+  public function login_user() {
     // No ajax login is supported at the moment.
   	if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			return;
 		}
 
-  	if ( ! empty( $_GET['token'] ) ) {
-			$wp_query->set(
-				'email_token_login',
-				sanitize_text_field( $_GET['token'] )
-			);
+  	if ( empty( $_GET['token'] ) ) {
+			return;
 		}
 
-    $token = $wp_query->get( 'email_token_login' );
+    $token = $_GET['token'];
 
     // No token, no login!
     if ( empty( $token ) ) {
@@ -237,7 +269,7 @@ class Email_Token_Login {
     }
 
     // If no success, redirect to login page.
-    wp_safe_redirect( site_url( 'wp-login.php' ) );
+    wp_safe_redirect( wp_login_url() );
     exit;
   }
 
@@ -256,69 +288,19 @@ class Email_Token_Login {
   }
 
   /**
-   * Generate token mail if a user is found
-   * or create a error.
-   */
-  public function login_user() {
-    if ( isset( $_POST['log'] ) ) {
-      $email = $_POST['log'];
-
-      if ( $username = $this->get_user( $email ) ) {
-        $user = get_user_by( 'login', $username );
-      } else {
-        $user = get_user_by( 'email', $email );
-      }
-
-      if ( $user instanceof WP_User ) {
-        $token = wp_hash_password( $email );
-
-        // Update user meta with token and created time.
-        update_user_meta( $user->ID, $this->token_meta_key, $token );
-        update_user_meta( $user->ID, $this->created_meta_key, time() );
-
-        // Base64 is not used for encryption, it's used
-        // to get a nicer url token.
-        $token = base64_encode( $token );
-
-        // Generate login url.
-        $url = admin_url( 'login/?token=' . $token );
-
-        // Send mail!
-        $mail_sent = ! wp_mail( $email, wp_specialchars_decode( $this->get_mail_title() ), $this->get_mail_body( $url ) );
-
-        global $errors;
-
-        if ( apply_filters( 'email_token_login/dev_mode', defined( 'WP_ENV' ) && WP_ENV === 'development' ) ) {
-          $errors->add( 'token', sprintf( 'Development mode: <a href="%s">Login</a>', $url ), 'message' );
-        } else {
-          if ( $mail_sent ) {
-            $errors->add( 'token', __( 'We sent you a link to sign in. Please check your inbox.', 'email-token-login' ), 'message' );
-          } else {
-            $errors->add( 'token', __( 'The email could not be sent. Possible reason: your host may have disabled the mail() function.', 'email-token-login' ) );
-          }
-        }
-      } else {
-        global $errors;
-        $errors->add( 'no_user_found', __( 'No user found!', 'email-token-login' ) );
-      }
-    }
-  }
-
-  /**
    * Setup actions.
    */
   protected function setup_actions() {
-    add_action( 'init', [$this, 'add_endpoint'] );
     add_action( 'login_head', [$this, 'login_head'] );
-    add_action( 'login_head', [$this, 'login_user'] );
-		add_action( 'parse_query', [$this, 'handle_endpoint'] );
+    add_action( 'login_init', [$this, 'generate_token'] );
+    add_action( 'login_init', [$this, 'login_user'] );
   }
 
   /**
    * Setup filters.
    */
   protected function setup_filters() {
-    add_filter( 'gettext', [$this, 'get_email_label'] );
+    add_filter( 'gettext', [$this, 'get_email_label'], 10, 1 );
     add_filter( 'wp_login_errors', [$this, 'wp_login_errors'], 10, 0 );
     remove_filter( 'authenticate', 'wp_authenticate_username_password', 20, 3 );
   }
@@ -345,14 +327,4 @@ class Email_Token_Login {
   public function wp_login_errors() {
     return new WP_Error();
   }
-
 }
-
-/**
- * Boot the plugin.
- */
-add_action( 'plugins_loaded', function () {
-  return Email_Token_Login::instance();
-} );
-
-//add_filter( 'email_token_login/dev_mode', '__return_true' );

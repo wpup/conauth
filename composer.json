@@ -1,0 +1,36 @@
+{
+  "name": "frozzere/wp-email-token-login",
+  "type": "wordpress-plugin",
+  "license": "MIT",
+  "description": "Signing in to WordPress by email without password",
+  "authors": [
+    {
+      "name": "Fredrik Forsmo",
+      "email": "fredrik.forsmo@gmail.com",
+      "homepage": "https://github.com/frozzare"
+    }
+  ],
+  "keywords": [
+    "admin",
+    "menu",
+    "tabs"
+  ],
+  "support": {
+    "issues": "https://github.com/frozzere/wp-email-token-login/issues"
+  },
+  "require": {
+    "php": ">=5.4.7",
+    "composer/installers": "~1.0"
+  },
+  "require-dev": {
+    "frozzare/wp-test-suite": "~1.0",
+    "wp-coding-standards/wpcs": "dev-develop",
+    "sebastian/phpcpd": "~2.0@dev"
+  },
+  "scripts": {
+    "post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs",
+    "post-update-cmd" : "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
