@@ -178,7 +178,17 @@ class Conauth {
                 // Send mail!
                 $mail_sent = wp_mail( $email, wp_specialchars_decode( $this->get_mail_title() ), $this->get_mail_body( $url ) );
 
-                if ( apply_filters( 'conauth/dev_mode', defined( 'WP_ENV' ) && WP_ENV === 'development' ) ) {
+                // If `WP_ENV` is used and in development Conauth is in dev mode.
+                $dev_mode = defined( 'WP_ENV' ) && WP_ENV === 'development';
+
+                /**
+                 * Output login link as a message on `wp-login.php`.
+                 *
+                 * @param bool $dev_mode
+                 */
+                $dev_mode = apply_filters( 'conauth/dev_mode', $dev_mode );
+
+                if ( $dev_mode ) {
                     $errors->add(
                         'conauth_info',
                         sprintf( '%s <a href="%s">%s</a>', __( 'Couch Mode', 'conauth' ), $url, __( 'Click to log in', 'conauth' ) ),

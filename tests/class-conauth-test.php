@@ -108,7 +108,7 @@ class Conauth_Test extends \WP_UnitTestCase {
         $this->login->generate_token();
         $messages = $errors->get_error_messages();
 
-        $this->assertTrue( (bool) preg_match( '/Development\smode/', $messages[0] ) );
+        $this->assertTrue( (bool) preg_match( '/Couch\sMode/', $messages[0] ) );
 
         unset( $_POST['log'] );
         $errors = null;
