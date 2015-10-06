@@ -191,7 +191,7 @@ class Conauth {
                 if ( $dev_mode ) {
                     $errors->add(
                         'conauth_info',
-                        sprintf( '%s <a href="%s">%s</a>', __( 'Couch Mode', 'conauth' ), $url, __( 'Click to log in', 'conauth' ) ),
+                        sprintf( '%s: <a href="%s">%s</a>', __( 'Couch Mode', 'conauth' ), $url, __( 'Click to log in', 'conauth' ) ),
                         'message'
                     );
                 } else {
