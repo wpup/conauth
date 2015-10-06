@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Email Token Login\n"
+"POT-Creation-Date: 2015-10-06 20:56+0100\n"
+"PO-Revision-Date: 2015-10-06 20:56+0100\n"
+"Last-Translator: Fredrik Forsmo <fredrik.forsmo@gmail.com>\n"
+"Language-Team: \n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.3\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: _e;__;esc_html__;esc_html_e\n"
+"X-Poedit-SearchPath-0: ../src\n"
+
+#: ../src/class-conauth.php:103
+msgid "E-mail"
+msgstr "E-post"
+
+#: ../src/class-conauth.php:136
+#, php-format
+msgid "Sign in to %s"
+msgstr "Logga in på %s"
+
+#: ../src/class-conauth.php:183
+msgid "Development mode:"
+msgstr "Utvecklingsläge:"
+
+#: ../src/class-conauth.php:184
+msgid "Staging mode:"
+msgstr "Testläge:"
+
+#: ../src/class-conauth.php:188
+msgid "Couch Mode"
+msgstr "Soffläge"
+
+#: ../src/class-conauth.php:188
+msgid "Click to log in"
+msgstr "Klicka för att logga in"
+
+#: ../src/class-conauth.php:195
+msgid "We sent you a link to sign in. Please check your inbox."
+msgstr "Vi skickade en länk för att logga in. Kontrollera din inkorg."
+
+#: ../src/class-conauth.php:201
+msgid ""
+"The email could not be sent. Possible reason: your host may have disabled "
+"the mail() function."
+msgstr ""
+"E-postmeddelandet kunde inte skickas. Möjlig orsak: ditt webbhotell/din "
+"server har inaktiverat funktionen mail()."
+
+#: ../src/class-conauth.php:208
+msgid "Something went wrong. Please try again."
+msgstr "Något gick snett. Var god försök igen"
+
+#~ msgid "Log In"
+#~ msgstr "Logga in"
+
+#~ msgid "Username"
+#~ msgstr "﻿Användarnamn"
+
+#~ msgid "WordPress Login"
+#~ msgstr "WordPress inlogg"

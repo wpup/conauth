@@ -1,8 +1,8 @@
 {
-  "name": "frozzere/wp-email-token-login",
+  "name": "frozzere/wp-conauth",
   "type": "wordpress-plugin",
   "license": "MIT",
-  "description": "Signing in to WordPress by email without password",
+  "description": "Signing in to WordPress by link sent to your email",
   "authors": [
     {
       "name": "Fredrik Forsmo",
@@ -11,12 +11,13 @@
     }
   ],
   "keywords": [
-    "admin",
-    "menu",
-    "tabs"
+    "conauth",
+    "login",
+    "email",
+    "password"
   ],
   "support": {
-    "issues": "https://github.com/frozzere/wp-email-token-login/issues"
+    "issues": "https://github.com/frozzere/wp-conauth/issues"
   },
   "require": {
     "php": ">=5.4.7",
