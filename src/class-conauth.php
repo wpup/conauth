@@ -62,6 +62,38 @@ class Conauth {
 		return get_user_by( 'login', $username );
     }
 
+    /**
+     * Clean users meta values.
+     *
+     * @param  WP_User $user
+     */
+    protected function clean_user( WP_User $user ) {
+        delete_user_meta( $user->ID, $this->token_meta_key );
+        delete_user_meta( $user->ID, $this->created_meta_key );
+    }
+
+    /**
+     * Find user by token.
+     *
+     * @param  string $token
+     *
+     * @return null|WP_User
+     */
+    protected function find_user( $token ) {
+        if ( ! is_string( $token ) || empty( $token ) ) {
+            return;
+        }
+
+        $users = get_users( [
+            'meta_key'    => $this->token_meta_key,
+            'meta_value'  => $token,
+            'number'      => 1,
+            'count_total' => false
+        ] );
+
+        return empty( $users ) ? null : $users[0];
+    }
+
 	/**
 	 * Determine if email is shared email or not.
 	 *
