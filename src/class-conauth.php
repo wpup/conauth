@@ -317,7 +317,7 @@ class Conauth {
 	 */
     protected function setup_actions() {
         add_action( 'login_head', [$this, 'login_head'] );
-        add_action( 'login_init', [$this, 'generate_token'] );
+        add_action( 'login_head', [$this, 'generate_token'] );
         add_action( 'login_init', [$this, 'login_user'] );
     }
 

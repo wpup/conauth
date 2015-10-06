@@ -27,7 +27,7 @@ class Conauth_Test extends \WP_UnitTestCase {
 
     public function test_actions() {
         $this->assertSame( 10, has_action( 'login_head', [$this->login, 'login_head'] ) );
-        $this->assertSame( 10, has_action( 'login_init', [$this->login, 'generate_token'] ) );
+        $this->assertSame( 10, has_action( 'login_head', [$this->login, 'generate_token'] ) );
         $this->assertSame( 10, has_action( 'login_init', [$this->login, 'login_user'] ) );
     }
 
