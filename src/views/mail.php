@@ -8,13 +8,13 @@
   <body style="width: 100% !important; min-width: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0; padding: 0;">
     <style type="text/css">
         a:hover {
-        color: #2795b6 !important;
+        color: #fff !important;
         }
         a:active {
-        color: #2795b6 !important;
+        color: #fff !important;
         }
         a:visited {
-        color: #2ba6cb !important;
+        color: #fff !important;
         }
         h1 a:active {
         color: #2ba6cb !important;
