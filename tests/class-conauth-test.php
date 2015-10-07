@@ -103,7 +103,7 @@ class Conauth_Test extends \WP_UnitTestCase {
         $user = get_user_by( 'id', $user_id );
         $_POST['log'] = $user->user_email;
 
-        tests_add_filter( 'conauth/dev_mode', '__return_true' );
+        tests_add_filter( 'conauth/couch_mode', '__return_true' );
 
         $this->login->generate_token();
         $messages = $errors->get_error_messages();
