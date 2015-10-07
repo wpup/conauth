@@ -340,24 +340,22 @@
                                                     <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
                                                         <td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0px 0px 10px;" align="left" valign="top">
                             								<p style="color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;" align="left">
-                                                                <?php echo esc_html( sprintf(
+                                                                <?php
+                                                                echo esc_html( sprintf(
                                                                     __( 'Click and confirm that you want to sign in to %s. This link will expire in fifteen minutes and can only be used once.', 'conauth' ),
                                                                     get_bloginfo( 'name' )
                                                                 ) );
                                                                 ?>
                                                             </p>
-                							            </td>
-                							            <td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;" align="left" valign="top"></td>
-                						            </tr>
-                                                </table>
-                                                <table class="button radius" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; overflow: hidden; height: 30px; line-height: 28px; color: #fff; font-weight: normal; text-decoration: none; -webkit-appearance: none; -webkit-border-radius: 3px; border-radius: 3px; white-space: nowrap; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; margin-bottom: 30px; background: #00a0d2; padding: 0 12px 2px; border: 1px solid #0073aa;" bgcolor="#00a0d2">
-                                                    <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
-                                                        <td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: center; color: #ffffff; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; display: block; width: auto !important; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; background: #2ba6cb; margin: 0; padding: 8px 0; border: 1px solid #2284a1;" align="center" bgcolor="#2ba6cb" valign="top">
-                								            <a href="<?php echo esc_attr( $url ); ?>" style="color: #ffffff; text-decoration: none; font-weight: normal; font-family: Helvetica, Arial, sans-serif; font-size: 16px; padding-top: 5px;">
+                                                            <br />
+                                                            <a href="<?php echo esc_attr( $url ); ?>" style="color: #ffffff; text-decoration: none; font-weight: normal; font-family: Helvetica, Arial, sans-serif; font-size: 14px; border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; overflow: hidden; height: 30px; line-height: 28px; -webkit-appearance: none; -webkit-border-radius: 3px; border-radius: 3px; white-space: nowrap; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; margin-bottom: 30px; background: #00a0d2; border: 1px solid #0073aa; padding: 10px;" bgcolor="#00a0d2">
                                                                 <?php echo esc_html( $this->get_mail_title() ); ?>
                                                             </a>
+                                                            <br />
+                                                            <br />
                 							            </td>
-                        						    </tr>
+                                                        <td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;" align="left" valign="top"></td>
+                                                    </tr>
                                                 </table>
                                             </td>
                         				</tr>
