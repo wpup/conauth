@@ -5,7 +5,7 @@
 
 > Work in progress
 
-Signing in to WordPress by link sent to your email.
+Signing in to WordPress by link sent to your email. The link will expire in fifteen minutes and can only be used once.
 
 ## Login page
 
