@@ -7,6 +7,11 @@
 
 Signing in to WordPress by link sent to your email.
 
+## Login page
+
+![WordPress Login](https://cloud.githubusercontent.com/assets/14610/10332389/2596b6a2-6cdd-11e5-8ab8-5603233f28c9.png)
+
+## Default mail
 ![Conauth mail](https://cloud.githubusercontent.com/assets/14610/10332348/fb4863a0-6cdc-11e5-983c-85455194886d.png)
 
 ## Install
