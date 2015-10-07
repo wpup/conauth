@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Email Token Login\n"
-"POT-Creation-Date: 2015-10-07 09:04+0100\n"
-"PO-Revision-Date: 2015-10-07 09:08+0100\n"
+"POT-Creation-Date: 2015-10-07 14:49+0100\n"
+"PO-Revision-Date: 2015-10-07 14:49+0100\n"
 "Last-Translator: Fredrik Forsmo <fredrik.forsmo@gmail.com>\n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -26,8 +26,8 @@ msgid "Sign in to %s"
 msgstr "Logga in på %s"
 
 #: ../src/class-conauth.php:240
-msgid "Couch Mode"
-msgstr "Soffläge"
+msgid "Development Mode:"
+msgstr "Utvecklingsläge:"
 
 #: ../src/class-conauth.php:240
 msgid "Click to log in"
@@ -45,11 +45,11 @@ msgstr ""
 "E-postmeddelandet kunde inte skickas. Möjlig orsak: ditt webbhotell/din "
 "server har inaktiverat funktionen mail()."
 
-#: ../src/class-conauth.php:260
+#: ../src/class-conauth.php:260 ../src/class-conauth.php:343
 msgid "Something went wrong. Please try again."
 msgstr "Något gick snett. Var god försök igen"
 
-#: ../src/class-conauth.php:317
+#: ../src/class-conauth.php:318 ../src/class-conauth.php:328
 msgid "The sign-in link expired. Please try again."
 msgstr "Inloggnings länk har upphört. Var god försök igen."
 
@@ -65,6 +65,9 @@ msgstr ""
 #: ../src/views/mail.php:367
 msgid "Or sign in using this link:"
 msgstr "Eller logga in via denna länk:"
+
+#~ msgid "Couch Mode"
+#~ msgstr "Soffläge"
 
 #~ msgid "Development mode:"
 #~ msgstr "Utvecklingsläge:"
