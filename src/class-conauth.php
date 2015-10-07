@@ -337,8 +337,12 @@ class Conauth {
 
 		// Don't continue if the user is not valid.
         if ( $user instanceof WP_User === false ) {
-            wp_safe_redirect( wp_login_url() );
-            exit;
+            global $errors;
+            $errors->add(
+                'conauth_error',
+                __( 'Something went wrong. Please try again.', 'conauth' )
+            );
+            return;
         }
 
 		// Clean users meta values.
