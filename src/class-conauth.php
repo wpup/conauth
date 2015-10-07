@@ -151,11 +151,25 @@ class Conauth {
 		 *
 		 * @param string $url
 		 */
-        if ( $body = apply_filters( 'conauth/mail_body', $url ) ) {
+		$body = apply_filters( 'conauth/mail_body', $url );
+
+        // Don't return a mail body with only the url.
+        if ( ! empty( $body ) && $body !== $url ) {
             return $body;
         }
 
-		return sprintf( 'Your login link: <a href="%s">%s</a>', $url, $url );
+        $ob_level = ob_get_level();
+		ob_start();
+
+        try {
+            require_once __DIR__ . '/views/mail.php';
+		} catch ( Exception $e ) {
+			while ( ob_get_level() > $ob_level ) {
+				ob_end_clean();
+			}
+		}
+
+        return trim( ob_get_clean() );
     }
 
 	/**
@@ -344,6 +358,15 @@ class Conauth {
         <?php
     }
 
+    /**
+     * Set mail content type.
+     *
+     * @return string
+     */
+    public function set_mail_content_type() {
+        return 'text/html';
+    }
+
 	/**
 	 * Setup actions.
 	 */
@@ -359,6 +382,7 @@ class Conauth {
     protected function setup_filters() {
         add_filter( 'gettext', [$this, 'get_email_label'], 99, 2 );
         add_filter( 'wp_login_errors', [$this, 'wp_login_errors'], 10, 0 );
+        add_filter( 'wp_mail_content_type', [$this, 'set_mail_content_type'] );
         remove_filter( 'authenticate', 'wp_authenticate_username_password', 20, 3 );
     }
 
