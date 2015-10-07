@@ -7,6 +7,8 @@
 
 Signing in to WordPress by link sent to your email.
 
+![Conauth mail](https://cloud.githubusercontent.com/assets/14610/10332348/fb4863a0-6cdc-11e5-983c-85455194886d.png)
+
 ## Install
 
 ```
