@@ -9,12 +9,23 @@
     <style type="text/css">
         a:hover {
         color: #fff !important;
+        text-decoration: underline !important;
         }
         a:active {
         color: #fff !important;
         }
         a:visited {
         color: #fff !important;
+        }
+        p a:hover {
+        color: #2ba6cb !important;
+        text-decoration: underline !important;
+        }
+        p a:active {
+        color: #2ba6cb !important;
+        }
+        p a:visited {
+        color: #2ba6cb !important;
         }
         h1 a:active {
         color: #2ba6cb !important;
