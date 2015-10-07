@@ -5,7 +5,7 @@
 
 > Work in progress
 
-Signing in to WordPress by link sent to your email. The link will expire in fifteen minutes and can only be used once.
+Signing in to WordPress by link sent to your email. The link will expire in fifteen minutes and can only be used once. Login with username and password will not work.
 
 This plugin concept comes from how [Medium](https://medium.com/the-story/signing-in-to-medium-by-email-aacc21134fcd) did [sign in to medium by email](https://medium.com/the-story/signing-in-to-medium-by-email-aacc21134fcd).
 
