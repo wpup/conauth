@@ -310,10 +310,24 @@ class Conauth {
         $token = base64_decode( $token );
         $user  = $this->find_user( $token );
 
+        // No user errror.
+        if ( empty( $user ) ) {
+            global $errors;
+            $errors->add(
+                'conauth_error',
+                __( 'The sign-in link expired. Please try again.', 'conauth' )
+            );
+            return;
+        }
+
 		// Don't continue if the user is not valid.
         if ( ! $this->valid_user( $user ) ) {
-            wp_safe_redirect( wp_login_url() );
-            exit;
+            global $errors;
+            $errors->add(
+                'conauth_error',
+                __( 'The sign-in link expired. Please try again.', 'conauth' )
+            );
+            return;
         }
 
 		// Hack to login a user with no password.
@@ -373,7 +387,7 @@ class Conauth {
     protected function setup_actions() {
         add_action( 'login_head', [$this, 'login_head'] );
         add_action( 'login_head', [$this, 'generate_token'] );
-        add_action( 'login_init', [$this, 'login_user'] );
+        add_action( 'login_head', [$this, 'login_user'] );
     }
 
 	/**
