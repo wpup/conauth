@@ -56,12 +56,3 @@ msgstr ""
 #: ../src/class-conauth.php:208
 msgid "Something went wrong. Please try again."
 msgstr "Något gick snett. Var god försök igen"
-
-#~ msgid "Log In"
-#~ msgstr "Logga in"
-
-#~ msgid "Username"
-#~ msgstr "﻿Användarnamn"
-
-#~ msgid "WordPress Login"
-#~ msgstr "WordPress inlogg"
