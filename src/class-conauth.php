@@ -158,15 +158,15 @@ class Conauth {
         }
 
         $ob_level = ob_get_level();
-		ob_start();
+        ob_start();
 
         try {
             require_once __DIR__ . '/views/mail.php';
-		} catch ( \Exception $e ) {
-			while ( ob_get_level() > $ob_level ) {
-				ob_end_clean();
-			}
-		}
+        } catch ( \Exception $e ) {
+            while ( ob_get_level() > $ob_level ) {
+                ob_end_clean();
+            }
+        }
 
         return trim( ob_get_clean() );
     }
@@ -196,9 +196,9 @@ class Conauth {
      */
     public function generate_token() {
         if ( isset( $_POST['log'] ) ) {
-			global $errors;
+            global $errors;
 
-			$email = $_POST['log'];
+            $email = $_POST['log'];
 
             if ( $username = $this->get_user( $email ) ) {
                 $user = get_user_by( 'login', $username );
@@ -295,17 +295,17 @@ class Conauth {
             return;
         }
 
-		// Get the token.
+        // Get the token.
         $token = isset( $_GET['token'] ) ?
 			esc_attr( wp_unslash( $_GET['token'] ) ) : '';
 
-		// No token, no login!
+        // No token, no login!
         if ( empty( $token ) ) {
             return;
         }
 
-		// Base64 is not used for encryption, it's used
-		// to get a nicer url token.
+        // Base64 is not used for encryption, it's used
+        // to get a nicer url token.
         $token = base64_decode( $token );
         $user  = $this->find_user( $token );
 
@@ -319,7 +319,7 @@ class Conauth {
             return;
         }
 
-		// Don't continue if the user is not valid.
+        // Don't continue if the user is not valid.
         if ( ! $this->valid_user( $user ) ) {
             global $errors;
             $errors->add(
@@ -329,7 +329,7 @@ class Conauth {
             return;
         }
 
-		// Hack to login a user with no password.
+        // Hack to login a user with no password.
         add_filter( 'authenticate', [$this, 'auth_user'], 10, 3 );
         $user = wp_signon( ['user_login' => $user->user_login] );
         remove_filter( 'authenticate', [$this, 'auth_user'], 10, 3 );
@@ -344,13 +344,13 @@ class Conauth {
             return;
         }
 
-		// Clean users meta values.
+        // Clean users meta values.
         $this->clean_user( $user );
 
-		// Set current user.
+        // Set current user.
         wp_set_current_user( $user->ID, $user->user_login );
 
-		// Determine if the user is logged in or not.
+        // Determine if the user is logged in or not.
         if ( is_user_logged_in() ) {
             wp_safe_redirect( admin_url() );
         } else {
@@ -366,12 +366,12 @@ class Conauth {
      */
     public function login_head() {
         ?>
-		<style type="text/css">
+        <style type="text/css">
             label[for="user_pass"],
             .login #nav a {
-			    display: none;
-		    }
-		</style>
+                display: none;
+            }
+        </style>
         <?php
     }
 
