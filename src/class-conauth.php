@@ -7,67 +7,67 @@ use WP_User;
 
 class Conauth {
 
-	/**
-	 * The instance of this class.
-	 *
-	 * @var Conauth
-	 */
+    /**
+     * Conauth instance.
+     *
+     * @var \Frozzare\Conauth\Conauth
+     */
     private static $instance;
 
-	/**
-	 * Created meta key.
-	 *
-	 * @var string
-	 */
-    protected $created_meta_key = '_conauth_token_created';
+    /**
+     * Created user meta key.
+     *
+     * @var string
+     */
+    private $created_meta_key = '_conauth_token_created';
 
-	/**
-	 * Token meta key.
-	 *
-	 * @var string
-	 */
-    protected $token_meta_key = '_conauth_token';
+    /**
+     * Token user meta key.
+     *
+     * @var string
+     */
+    private $token_meta_key = '_conauth_token';
 
-	/**
-	 * Get the instance of this class.
-	 *
-	 * @return Conauth
-	 */
+    /**
+     * Get the Conauth instance.
+     *
+     * @return \Frozzare\Conauth\Conauth
+     */
     public static function instance() {
         if ( ! isset( self::$instance ) ) {
-			self::$instance = new self;
+            self::$instance = new self;
         }
 
         return self::$instance;
     }
 
-	/**
-	 * The constructor.
-	 */
-    protected function __construct() {
-		$this->setup_actions();
-		$this->setup_filters();
-    }
-
-	/**
-	 * Auth user.
-	 *
-	 * @param  WP_User $user
-	 * @param  string  $username
-	 * @param  string  $password
-	 *
-	 * @return WP_User
-	 */
-    public function auth_user( $user, $username, $password ) {
-		return get_user_by( 'login', $username );
+    /**
+     * The constructor.
+     */
+    private function __construct() {
+        $this->setup_actions();
+        $this->setup_filters();
     }
 
     /**
-     * Clean users meta values.
+     * Auth user.
      *
-     * @param  WP_User $user
+     * @param  \WP_User $user
+     * @param  string  $username
+     * @param  string  $password
+     *
+     * @return null|\WP_User
      */
-    protected function clean_user( WP_User $user ) {
+    public function auth_user( $user, $username, $password ) {
+        return get_user_by( 'login', $username );
+    }
+
+    /**
+     * Clean user meta values.
+     *
+     * @param \WP_User $user
+     */
+    private function clean_user( WP_User $user ) {
         delete_user_meta( $user->ID, $this->token_meta_key );
         delete_user_meta( $user->ID, $this->created_meta_key );
     }
@@ -77,10 +77,10 @@ class Conauth {
      *
      * @param  string $token
      *
-     * @return null|WP_User
+     * @return null|\WP_User
      */
-    protected function find_user( $token ) {
-        if ( ! is_string( $token ) || empty( $token ) ) {
+    private function find_user( $token ) {
+        if ( ! is_string( $token )||empty( $token ) ) {
             return;
         }
 
@@ -94,22 +94,22 @@ class Conauth {
         return empty( $users ) ? null : $users[0];
     }
 
-	/**
-	 * Determine if email is shared email or not.
-	 *
-	 * @param  string $email
-	 *
-	 * @return string
-	 */
-    protected function get_user( $email ) {
-        if ( ! is_string( $email ) || empty( $email ) ) {
-			return '';
+    /**
+     * Determine if email is shared email or not.
+     *
+     * @param  string $email
+     *
+     * @return string
+     */
+    private function get_user( $email ) {
+        if ( ! is_string( $email )||empty( $email ) ) {
+            return '';
         }
 
-		$users = $this->get_shared_users();
-		$parts = explode( '@', $email );
+        $shared = $this->get_shared();
+        $parts  = explode( '@', $email );
 
-        foreach ( $users as $domain => $username ) {
+        foreach ( $shared as $domain => $username ) {
             if ( $domain === $parts[1] ) {
                 return $username;
             }
@@ -118,19 +118,18 @@ class Conauth {
         return '';
     }
 
-	/**
-	 * Change username to e-mail.
-	 *
-	 * @param  string $translated_text
-	 * @param  string $untranslated_text
-	 * @param  string $domain
-	 *
-	 * @return string
-	 */
-    public function get_email_label( $translated_text, $untranslated_text ) {
-		global $pagenow;
+    /**
+     * Change username to e-mail.
+     *
+     * @param  string $translated_text
+     * @param  string $untranslated_text
+     *
+     * @return string
+     */
+    public function get_email_label( $translated_text, $untraslated_text ) {
+        global $pagenow;
 
-        if ( $pagenow === 'wp-login.php' && $untranslated_text === 'Username'  ) {
+        if ( $pagenow === 'wp-login.php' && $untraslated_text === 'Username' ) {
             remove_filter( current_filter(), [$this, 'get_email_label'], 99, 2 );
             return __( 'E-mail', 'conauth' );
         }
@@ -138,20 +137,20 @@ class Conauth {
         return $translated_text;
     }
 
-	/**
-	 * Get mail body.
-	 *
-	 * @param  string $url
-	 *
-	 * @return string
-	 */
-    protected function get_mail_body( $url ) {
-		/**
-		 * Change mail body.
-		 *
-		 * @param string $url
-		 */
-		$body = apply_filters( 'conauth/mail_body', $url );
+    /**
+     * Get mail body.
+     *
+     * @param  string $url
+     *
+     * @return string
+     */
+    private function get_mail_body( $url ) {
+        /**
+         * Change mail body.
+         *
+         * @param string $url
+         */
+        $body = apply_filters( 'conauth/mail_body', $url );
 
         // Don't return a mail body with only the url.
         if ( ! empty( $body ) && $body !== $url ) {
@@ -163,7 +162,7 @@ class Conauth {
 
         try {
             require_once __DIR__ . '/views/mail.php';
-		} catch ( Exception $e ) {
+		} catch ( \Exception $e ) {
 			while ( ob_get_level() > $ob_level ) {
 				ob_end_clean();
 			}
@@ -172,29 +171,29 @@ class Conauth {
         return trim( ob_get_clean() );
     }
 
-	/**
-	 * Get mail title.
-	 *
-	 * @return string
-	 */
-    protected function get_mail_title() {
-		$title = sprintf(
-			__( 'Sign in to %s', 'conauth' ),
-			get_bloginfo( 'name' )
-		);
+    /**
+     * Get mail title.
+     *
+     * @return string
+     */
+    private function get_mail_title() {
+        $title = sprintf(
+            __( 'Sign in to %s', 'conauth' ),
+            get_bloginfo( 'name' )
+        );
 
-		/**
-		 * Change mail title.
-		 *
-		 * @param string $title
-		 */
-		return apply_filters( 'conauth/mail_title', $title );
+        /**
+         * Change mail title.
+         *
+         * @param string $title
+         */
+        return apply_filters( 'conauth/mail_title', $title );
     }
 
-	/**
-	 * Generate token mail if a user is found
-	 * or create a error.
-	 */
+    /**
+     * Generate token mail if a user is found
+     * or create a error.
+     */
     public function generate_token() {
         if ( isset( $_POST['log'] ) ) {
 			global $errors;
@@ -263,18 +262,18 @@ class Conauth {
         }
     }
 
-	/**
-	 * Get shared users.
-	 *
-	 * @return array
-	 */
-    protected function get_shared_users() {
-		/**
-		 * Get shared top domains associated with users.
-		 *
-		 * @var array
-		 */
-		$shared = apply_filters( 'conauth/shared', [] );
+    /**
+     * Get shared top domains associated with users.
+     *
+     * @return array
+     */
+    private function get_shared() {
+        /**
+         * Get shared top domains associated with users.
+         *
+         * @var array
+         */
+        $shared = apply_filters( 'conauth/shared', [] );
 
         foreach ( $shared as $domain => $username ) {
             $username = is_array( $username ) ? $username : [$username];
@@ -287,11 +286,11 @@ class Conauth {
         return $shared;
     }
 
-	/**
-	 * Handle endpoint.
-	 */
+    /**
+     * Handle login user endpoint.
+     */
     public function login_user() {
-		// No ajax login is supported at the moment.
+        // No ajax login is supported at the moment.
         if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
             return;
         }
@@ -361,10 +360,10 @@ class Conauth {
         exit;
     }
 
-	/**
-	 * Output CSS on login page.
-	 * The CSS will only hide elements.
-	 */
+    /**
+     * Output CSS on login page.
+     * The CSS will only hide elements.
+     */
     public function login_head() {
         ?>
 		<style type="text/css">
@@ -385,45 +384,45 @@ class Conauth {
         return 'text/html';
     }
 
-	/**
-	 * Setup actions.
-	 */
-    protected function setup_actions() {
+    /**
+     * Setup actions.
+     */
+    private function setup_actions() {
         add_action( 'login_head', [$this, 'login_head'] );
         add_action( 'login_head', [$this, 'generate_token'] );
         add_action( 'login_head', [$this, 'login_user'] );
     }
 
-	/**
-	 * Setup filters.
-	 */
-    protected function setup_filters() {
+    /**
+     * Setup filters.
+     */
+    private function setup_filters() {
         add_filter( 'gettext', [$this, 'get_email_label'], 99, 2 );
         add_filter( 'wp_login_errors', [$this, 'wp_login_errors'], 10, 0 );
         add_filter( 'wp_mail_content_type', [$this, 'set_mail_content_type'] );
         remove_filter( 'authenticate', 'wp_authenticate_username_password', 20, 3 );
     }
 
-	/**
-	 * Determine if we have valid user to login with.
-	 *
-	 * @param  WP_User $user
-	 *
-	 * @return bool
-	 */
-    protected function valid_user( WP_User $user ) {
+    /**
+     * Determine if we have a valid user to login with.
+     *
+     * @param  \WP_User $user
+     *
+     * @return bool
+     */
+    private function valid_user( WP_User $user ) {
         $created = get_user_meta( $user->ID, $this->created_meta_key, true );
         $created = intval( $created );
         $minutes = round( abs( time() - $created ) / 60, 2 );
         return $minutes <= apply_filters( 'conauth/minutes', 15 );
     }
 
-	/**
-	 * Clear login errors.
-	 *
-	 * @return WP_Error
-	 */
+    /**
+     * Clear login errors.
+     *
+     * @return \WP_Error
+     */
     public function wp_login_errors() {
-        return new WP_Error();
+        return new WP_Error;
     }
 }
