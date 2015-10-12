@@ -80,7 +80,7 @@ class Conauth {
      * @return null|\WP_User
      */
     private function find_user( $token ) {
-        if ( ! is_string( $token )||empty( $token ) ) {
+        if ( ! is_string( $token ) || empty( $token ) ) {
             return;
         }
 
@@ -102,7 +102,7 @@ class Conauth {
      * @return string
      */
     private function get_user( $email ) {
-        if ( ! is_string( $email )||empty( $email ) ) {
+        if ( ! is_string( $email ) || empty( $email ) ) {
             return '';
         }
 
@@ -122,7 +122,7 @@ class Conauth {
      * Change username to e-mail.
      *
      * @param  string $translated_text
-     * @param  string $untranslated_text
+     * @param  string $untraslated_text
      *
      * @return string
      */
