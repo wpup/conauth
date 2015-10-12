@@ -53,8 +53,8 @@ class Conauth {
      * Auth user.
      *
      * @param  \WP_User $user
-     * @param  string  $username
-     * @param  string  $password
+     * @param  string   $username
+     * @param  string   $password
      *
      * @return null|\WP_User
      */
@@ -297,7 +297,7 @@ class Conauth {
 
         // Get the token.
         $token = isset( $_GET['token'] ) ?
-			esc_attr( wp_unslash( $_GET['token'] ) ) : '';
+            esc_attr( wp_unslash( $_GET['token'] ) ) : '';
 
         // No token, no login!
         if ( empty( $token ) ) {
@@ -334,7 +334,7 @@ class Conauth {
         $user = wp_signon( ['user_login' => $user->user_login] );
         remove_filter( 'authenticate', [$this, 'auth_user'], 10, 3 );
 
-		// Don't continue if the user is not valid.
+        // Don't continue if the user is not valid.
         if ( $user instanceof WP_User === false ) {
             global $errors;
             $errors->add(
