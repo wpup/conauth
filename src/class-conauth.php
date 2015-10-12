@@ -279,7 +279,7 @@ class Conauth {
             $username = is_array( $username ) ? $username : [$username];
 
             if ( ! preg_match( '/\@\w+\.\w+/', '@' . $domain ) || ! username_exists( $username ) ) {
-                unset( $users[$domain] );
+                unset( $shared[$domain] );
             }
         }
 
