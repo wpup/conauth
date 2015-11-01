@@ -20,5 +20,12 @@ require_once __DIR__ . '/src/class-conauth.php';
  * Boot the plugin.
  */
 add_action( 'plugins_loaded', function () {
-  return \Frozzare\Conauth\Conauth::instance();
+    /**
+     * Get shared top domains associated with users.
+     *
+     * @var array
+     */
+    if ( add_filter( 'conauth/disabled', false ) === false ) {
+        return \Frozzare\Conauth\Conauth::instance();
+    }
 } );
