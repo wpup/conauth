@@ -21,11 +21,11 @@ require_once __DIR__ . '/src/class-conauth.php';
  */
 add_action( 'plugins_loaded', function () {
     /**
-     * Get shared top domains associated with users.
+     * Filter whether Conauth is enabled.
      *
-     * @var array
+     * @var bool
      */
-    if ( add_filter( 'conauth/disabled', false ) === false ) {
+    if ( apply_filters( 'conauth/enabled', true ) ) {
         return \Frozzare\Conauth\Conauth::instance();
     }
 } );
