@@ -23,7 +23,7 @@ add_action( 'plugins_loaded', function () {
     /**
      * Filter whether Conauth is enabled.
      *
-     * @var bool
+     * @param bool $enabled
      */
     if ( apply_filters( 'conauth/enabled', true ) ) {
         return \Frozzare\Conauth\Conauth::instance();

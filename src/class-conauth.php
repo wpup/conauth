@@ -229,7 +229,7 @@ class Conauth {
                 /**
                  * Output login link as a message on `wp-login.php`.
                  *
-                 * @param bool $debug
+                 * @param bool $dev_mode
                  */
                 $dev_mode = apply_filters( 'conauth/dev_mode', $dev_mode );
 
@@ -271,7 +271,7 @@ class Conauth {
         /**
          * Get shared top domains associated with users.
          *
-         * @var array
+         * @param array $shared
          */
         $shared = apply_filters( 'conauth/shared', [] );
 
