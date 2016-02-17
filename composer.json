@@ -16,9 +16,6 @@
     "email",
     "password"
   ],
-  "support": {
-    "issues": "https://github.com/frozzere/wp-conauth/issues"
-  },
   "require": {
     "php": ">=5.4.7",
     "composer/installers": "~1.0"
