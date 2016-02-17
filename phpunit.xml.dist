@@ -15,7 +15,7 @@
   verbose="true"
   >
   <testsuites>
-    <testsuite name="Email Token Login Test Suite">
+    <testsuite name="Conauth Test Suite">
       <directory suffix=".php">./tests/</directory>
       <exclude>./tests/fixtures</exclude>
     </testsuite>

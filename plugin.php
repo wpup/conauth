@@ -5,7 +5,7 @@
  * Plugin URI: https://github.com/frozzare/wp-conauth
  * Description: Signing in to WordPress by link sent to your email
  * Author: Fredrik Forsmo
- * Author URI: https://forsmo.me
+ * Author URI: https://frozzare.com
  * Version: 1.0.0
  * Textdomain: conauth
  */

@@ -3,8 +3,6 @@
 [![Build Status](https://travis-ci.org/frozzare/wp-conauth.svg?branch=master)](https://travis-ci.org/frozzare/wp-conauth)
 [![License](https://img.shields.io/packagist/l/frozzare/wp-conauth.svg)](https://packagist.org/packages/frozzare/wp-conauth)
 
-> Work in progress
-
 Signing in to WordPress by link sent to your email. The link will expire in fifteen minutes and can only be used once. Login with username and password will not work.
 
 This plugin concept comes from how [Medium](https://medium.com/the-story/signing-in-to-medium-by-email-aacc21134fcd) did [sign in to medium by email](https://medium.com/the-story/signing-in-to-medium-by-email-aacc21134fcd).
