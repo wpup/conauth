@@ -1,7 +1,6 @@
 # Conauth
 
-[![Build Status](https://travis-ci.org/frozzare/wp-conauth.svg?branch=master)](https://travis-ci.org/frozzare/wp-conauth)
-[![License](https://img.shields.io/packagist/l/frozzare/wp-conauth.svg)](https://packagist.org/packages/frozzare/wp-conauth)
+[![Build Status](https://travis-ci.org/wpup/conauth.svg?branch=master)](https://travis-ci.org/wpup/conauth)
 
 Signing in to WordPress by link sent to your email. The link will expire in fifteen minutes and can only be used once. Login with username and password will not work.
 
