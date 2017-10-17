@@ -16,7 +16,7 @@ This plugin concept comes from how [Medium](https://medium.com/the-story/signing
 ## Install
 
 ```
-$ composer require frozzare/wp-conauth
+composer require frozzare/wp-conauth
 ```
 
 # License
